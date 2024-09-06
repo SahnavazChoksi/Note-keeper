@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#00000">
+    <link rel="stylesheet" href="stylesheet.css">
+    <title>Note Keeper</title>
+    <style>
+        .box {
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <header>
+            <h1>Note Keeper</h1>
+        </header>
+        <div>
+            <form class="note">
+                <input id="title" placeholder="Note-Title" name="title">
+                <textarea id="note" name="note" placeholder="Write Note Here..." rows="3"></textarea>
+                <button id="add" type="button">+</button>
+
+            </form>
+        </div>
+
+
+        <section id="notes"></section>
+    </div>
+
+    <script>
+        let notes = [
+            {
+            id: 1,
+            title: "first note",
+            note: "this is my first note"
+        },
+         {
+            id: 2,
+            title: "second note",
+            note: "this is my second note"
+        }];
+        
+        var add = document.getElementById("add");
+        var title = document.getElementById("title");
+        var note = document.getElementById("note");
+        var notesElement = document.getElementById("notes");
+        var deleteAllElement = document.getElementById("delete");
+
+
+        function renderNotes() {
+            notesElement.innerHTML = "";
+            notes.map((hasan) => {
+                notesElement.innerHTML += 
+                `<div class="box">
+                    <div>${hasan.title}</div>
+                    <p>${hasan.note}</p>
+                    <button onclick="handleDelete(${hasan.id})">Edit</button>
+                    <button onclick="handleDelete(${hasan.id})">Delete</button>
+                </div>`;
+            });
+        }
+
+        renderNotes();
+
+        add.addEventListener('click', function() {
+            console.log("clicked");
+            notes.push({
+                id: notes.length + 1,
+                title: title.value,
+                note: note.value
+            });
+            renderNotes();
+            title.value = ""
+            note.value = ""
+            
+        });
+
+        deleteAllElement.addEventListener('click', function() {
+            console.log("clicked");
+            notes = [];
+            renderNotes();
+
+        })
+
+        function handleDelete(id){
+            var tempArray = []
+            notes.forEach(hasan=>{
+                if (hasan.id != id){
+                    tempArray.push(hasan);
+                }
+            })
+            notes = tempArray
+
+            renderNotes()
+        }
+        
+    </script>
+</body>
+
+</html>
